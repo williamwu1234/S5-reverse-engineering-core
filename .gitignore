@@ -1,0 +1,100 @@
+# ============================================================
+# 16_S5_核心总包_20261015 — 仓库排除规则
+# ============================================================
+# 本包已剔除厂商固件、反编译 APK、第三方参考仓库与实拍录像等大体积二进制
+# （排除清单 + 体积 + SHA-256 见 00_本包说明_收录与排除.md）。
+# 下列规则只防后续误提交同类内容与生成物。
+
+# ---------- 厂商固件（大体积，版权归 Panasonic）----------
+# 注意：**不要**全局忽略 *.bin ！相机设置 blob（65533 B）、PTP dump、
+# 激活状态快照都是核心研究证据，必须入库。
+S5___V*.bin
+S1___V*.bin
+S1H__V*.bin
+*.apk
+*.ipa
+*.dex
+*.arsc
+# 注意：不要忽略 *.sig 与 *.parts.json —— 它们是固件指针（SHA-256 / 分区布局）
+
+# ---------- 归档包 ----------
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+
+# ---------- 大型媒体（实拍录像）----------
+*.MP4
+*.MOV
+*.AVI
+*.MKV
+*.MTS
+*.mov
+# 注：小型 .mp4 研究片段（15_LUT…/out 之外的）按需保留
+
+# ---------- 目标文件 / 符号库 ----------
+*.so
+*.o
+*.dylib
+*.dll
+*.exe
+*.class
+*.DAT
+*.dat
+
+# ---------- 构建产物 ----------
+build/
+dist/
+DerivedData/
+*.xcarchive
+*.xcuserstate
+xcuserdata/
+Pods/
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ---------- 编译产物：Mach-O 可执行（无扩展名）----------
+# 用目录锚定，避免误伤同前缀的源码/目录
+**/ble/ble_*
+**/campaign2/ble_*
+!**/ble/ble_*.swift
+!**/ble/ble_*.sh
+!**/ble/ble_*.py
+!**/campaign2/ble_*.swift
+!**/campaign2/ble_*.sh
+!**/campaign2/ble_*.py
+04_工具与脚本/ptp/s5_usb_desc
+04_工具与脚本/ptp/s5_usb_ep0
+04_工具与脚本/ptp/s5_usb_ep0out
+04_工具与脚本/ptp/s5_usb_listen
+s5_ptp_dump
+s5_ptp_raw
+
+# ---------- 运行时输出（pid / 滚动日志 / 生成物）----------
+04_工具与脚本/campaign2/out/.run/
+04_工具与脚本/campaign2/out/**/*.log
+04_工具与脚本/campaign2/out/**/*.pid
+15_LUT烧录工具_20261014/out/
+12_S5无线监看_v1.0_20261014/downloads/
+
+# ---------- 嵌套 git 仓库 ----------
+12_S5无线监看_v1.0_20261014/.git/
+
+# ---------- 环境与密钥 ----------
+.env
+.env.*
+*.pem
+*.key
+
+# ---------- macOS / 编辑器 ----------
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.Trashes
+*.swp
+*~
